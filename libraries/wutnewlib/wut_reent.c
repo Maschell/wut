@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include <coreinit/thread.h>
+#include <coreinit/debug.h>
 
 #define __WUT_CONTEXT_THREAD_SPECIFIC_ID OS_THREAD_SPECIFIC_WUT_RESERVED_1
 
