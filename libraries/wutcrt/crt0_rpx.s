@@ -3,7 +3,9 @@
 .extern __init_wut
 .extern __fini_wut
 .extern __preinit_user
+.extern malloc
 .extern OSIsDebuggerInitialized
+.extern OSSwitchStack
 
 .section .crt0, "ax", @progbits
 .global __rpx_start
@@ -23,6 +25,10 @@ __rpx_start:
    ori 5,5, __init_wut@l
    tw 0x1f, 30, 0           # DBGCTL_INSTRUCTION
 init_wut:
+   lis        3,0x8
+   bl         malloc
+   addis      3, 3, 0x8
+   bl         OSSwitchStack
    bl __init_wut
    lwz 3, 0x8(1)
    lwz 4, 0xC(1)
