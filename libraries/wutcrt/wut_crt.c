@@ -1,4 +1,5 @@
 #include <coreinit/debug.h>
+extern void* OSSwitchStack(void*);
 void __init_wut_newlib();
 void __init_wut_stdcpp();
 void __init_wut_devoptab();
@@ -12,10 +13,18 @@ void __attribute__((weak)) __fini_wut_socket();
 void __attribute__((weak))
 __init_wut()
 {
+
    __init_wut_newlib();
    __init_wut_stdcpp();
    __init_wut_devoptab();
    if (&__init_wut_socket) __init_wut_socket();
+   void * newStack = malloc(512*1024);
+    if(newStack) {
+        OSSwitchStack(newStack);
+        OSReport("allocated new stack\n");
+    } else {
+        OSReport("Failed to allocate stack\n");
+    } 
 }
 
 void __attribute__((weak))
