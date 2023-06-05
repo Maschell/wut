@@ -36,10 +36,13 @@ __wut_thread_cleanup(OSThread *thread,
    OSSetThreadSpecific(__WUT_CONTEXT_THREAD_SPECIFIC_ID, NULL);
 }
 
+extern void OSCheckActiveThreads();
 struct _reent *
 __wut_getreent(void)
 {
    struct __wut_thread_context *context;
+   
+   OSCheckActiveThreads();
 
    context = (struct __wut_thread_context *)OSGetThreadSpecific(__WUT_CONTEXT_THREAD_SPECIFIC_ID);
    if (!context) {
