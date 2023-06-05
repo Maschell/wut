@@ -6,6 +6,7 @@
 .extern malloc
 .extern OSIsDebuggerInitialized
 .extern OSSwitchStack
+.extern OSGetCurrentThread
 
 .section .crt0, "ax", @progbits
 .global __rpx_start
@@ -27,8 +28,13 @@ __rpx_start:
 init_wut:
    lis        3,0x8
    bl         malloc
+   or      31, 3, 3
    addis      3, 3, 0x8
-   bl         OSSwitchStack
+   or      30, 3, 3
+   bl         OSSwitchStack   
+   bl OSGetCurrentThread
+   stw        31,0x398(3)
+   stw        30,0x394(3)
    bl __init_wut
    lwz 3, 0x8(1)
    lwz 4, 0xC(1)
