@@ -46,6 +46,10 @@ __wut_getreent(void)
     register int r1 asm("r1");
     OSThread *thread = OSGetCurrentThread();
     OSReport("stack: %08X. stackend %08X stackstart %08X. Space left on stack %08X\n", r1, thread->stackEnd, thread->stackStart, r1 - (uint32_t) thread->stackEnd);
+    if((int)(r1 - (uint32_t) thread->stackEnd) < 0) {
+        uint32_t * d = 0;
+        *d = 0;
+    }
    OSCheckActiveThreads();
 
    context = (struct __wut_thread_context *)OSGetThreadSpecific(__WUT_CONTEXT_THREAD_SPECIFIC_ID);
