@@ -1,4 +1,5 @@
 #include <coreinit/debug.h>
+#include <stdlib.h>
 extern void* OSSwitchStack(void*);
 void __init_wut_newlib();
 void __init_wut_stdcpp();
